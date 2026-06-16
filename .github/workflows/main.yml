@@ -6,6 +6,7 @@ on:
     - gh-pages
   release:
     types: [created]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -25,13 +26,13 @@ jobs:
     - run: npm install --global rollup@2.79.1
     - run: export BASEPATH='/WAI/eval/report-tool' && npm run clean:build && rollup -c
     - run: cd build && ln -s index.html 404.html # symlink for GH pages fallback
-    - name: Deploy 🚀
-      uses: JamesIves/github-pages-deploy-action@v4
-      with:
-        BRANCH: gh-pages
-        FOLDER: build
     - name: Create zip file 🗂
       uses: vimtor/action-zip@v1
       with:
         files: build/
         dest: result.zip 
+    - name: Deploy 🚀
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        BRANCH: gh-pages
+        FOLDER: build
