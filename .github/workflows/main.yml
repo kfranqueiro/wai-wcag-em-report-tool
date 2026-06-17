@@ -12,6 +12,8 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
     - name: Checkout 🛎️
@@ -27,7 +29,7 @@ jobs:
     - run: export BASEPATH='/WAI/eval/report-tool' && npm run clean:build && rollup -c
     - run: cd build && ln -s index.html 404.html # symlink for GH pages fallback
     - name: Create zip file 🗂
-      uses: vimtor/action-zip@v1
+      uses: vimtor/action-zip@v1.3
       with:
         files: build/
         dest: result.zip 
